@@ -12,7 +12,6 @@
 #include "Components/Abilities/CancelAbilityComponent.h"
 #include "Components/Abilities/EndAbilityComponent.h"
 #include "Components/BaseComponents/DataBaseComponent.h"
-#include "Components/Events/FAssetNameComponent.h"
 #include "Components/Flags/AbilityComponent.h"
 #include "Components/Flags/PlayerComponent.h"
 #include "Components/Movement/PositionComponent.h"
@@ -133,9 +132,9 @@ public:
 	{
 		T* SubPtr = nullptr;
 		const auto Filter = FFilter::Make<T>();
-		Mechanism->EnchainSolid(Filter)->Operate([&](const FSolidChain::FCursor& Cursor)
+		Mechanism->EnchainSolid(Filter)->Operate([&](FSolidSubjectHandle Sub)
 		{
-			SubPtr = Cursor.GetSubject();
+			SubPtr = Sub;
 		});
 		return SubPtr;
 	}
@@ -149,9 +148,9 @@ public:
 	{
 		FSubjectHandle SubPtr;
 		const auto Filter = FFilter::Make<FPlayerComponent>();
-		Mechanism->Enchain(Filter)->Operate([&](const FChain::FCursor& Cursor)
+		Mechanism->Enchain(Filter)->Operate([&](FSubjectHandle Sub)
 		{
-			SubPtr = Cursor.GetSubject();
+			SubPtr = Sub;
 		});
 		return SubPtr;
 	}
@@ -416,10 +415,9 @@ public:
 				if (!Char) return;
 
 				//TODO: {REF} init character
-				const auto CharacterType = Char->GetCharacterViewData().CharacterType;
-				const auto AssetName = ENUM_VALUE_TO_STRING(ECharacterType, CharacterType);
-				SubjectHandle.SetTrait(FAssetNameComponent(FName(*AssetName)));
-				
+				//const auto CharacterType = Char->CharacterData.CharacterType;
+				//const auto AssetName = ENUM_VALUE_TO_STRING(ECharacterType, CharacterType);
+				//SubjectHandle.SetTrait(FAssetNameComponent(FName(*AssetName)));
 				//GameplayExtensions::InitializeCharacter(Mechanism, SubjectHandle, CharacterType);				
 			});
 	}

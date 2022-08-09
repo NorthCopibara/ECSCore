@@ -15,9 +15,9 @@ void ReactiveAddSystem::Initialize(AMechanism* Mechanism)
 auto ReactiveAddSystem::Update(AMechanism* Mechanism, float DeltaTime) -> void
 {
 	if(!TriggerOnAdd) return;
-	Mechanism->Enchain(ReactiveFilter)->Operate([&](const FChain::FCursor& Cursor, FEventAddComponent Added)
+	Mechanism->Enchain(ReactiveFilter)->Operate([&](FSubjectHandle Subject, FEventAddComponent Added)
 	{
-		const auto Sub = Cursor.GetSubject();
+		const auto Sub = Subject;
 		if(Added.Value != TriggerOnAdd) return;
 		if (HasComponents(Added.Subject))
 			Execute(Mechanism, FUnsafeSubjectHandle(Added.Subject));

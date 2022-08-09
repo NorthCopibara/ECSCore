@@ -8,9 +8,9 @@ void ReactiveRemoveSystem::Initialize(AMechanism* Mechanism)
 auto ReactiveRemoveSystem::Update(AMechanism* Mechanism, float DeltaTime) -> void
 {
 	if(!TriggerOnRemove) return;
-	Mechanism->Enchain(ReactiveFilter)->Operate([&](const FChain::FCursor& Cursor, FEventRemoveComponent Removed)
+	Mechanism->Enchain(ReactiveFilter)->Operate([&](FSubjectHandle Subject, FEventRemoveComponent Removed)
 	{
-		const auto Sub = Cursor.GetSubject();		
+		const auto Sub = Subject;		
 		if (Removed.Value != TriggerOnRemove) return;
 		if(HasComponents(Removed.Subject))
 			Execute(Mechanism, FUnsafeSubjectHandle(Removed.Subject));		

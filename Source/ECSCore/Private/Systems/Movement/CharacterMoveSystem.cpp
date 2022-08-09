@@ -24,7 +24,7 @@ void CharacterMoveSystem::Update(AMechanism* Mechanism, float DeltaTime)
 	                                           FMoveDirectionComponent,
 	                                           FLinkComponent>().Exclude<FIsDeathComponent>();
 
-	Mechanism->EnchainSolid(CharacterFilter)->Operate([&](const FSolidChain::FCursor& Cursor,
+	Mechanism->EnchainSolid(CharacterFilter)->Operate([&](FSolidSubjectHandle SubjectHandle,
 	                                                      const FMoveSpeedMultiplierComponent& MoveSpeedMultiplier,
 	                                                      FPositionComponent& Pos,
 	                                                      FVelocityComponent& Vel,
@@ -32,7 +32,7 @@ void CharacterMoveSystem::Update(AMechanism* Mechanism, float DeltaTime)
 	                                                      const FMoveSpeedComponent& MoveSpeed,
 	                                                      const FLinkComponent& Link)
 	{
-		const auto Sub = Cursor.GetSubject();
+		const auto Sub = SubjectHandle;
 		const FVector Loc = Sub.GetTrait<FPositionComponent>().Value;
 		if (MoveDir.Value.SizeSquared() >= 0.01f && !Sub.HasTrait<FBlockMovementComponent>())
 		{
@@ -47,7 +47,7 @@ void CharacterMoveSystem::Update(AMechanism* Mechanism, float DeltaTime)
 				FVector OutHitNormal(FVector::ZeroVector);
 				FVector OutHit(FVector::ZeroVector);
 				bool Stop;
-				if (CommonExtensions::OverlapCheckPosition(Mechanism, Cursor.GetSubject(),
+				if (CommonExtensions::OverlapCheckPosition(Mechanism, SubjectHandle,
 				                                           CAPSULE_OFFSET(NavLoc),
 				                                           CAPSULE_OFFSET(NavLoc), Stop, OutHit,
 				                                           OutHitNormal, TraceTypeQuery1, OwnerInstanceID))
@@ -57,7 +57,7 @@ void CharacterMoveSystem::Update(AMechanism* Mechanism, float DeltaTime)
 					if (NavSystem->ProjectPointToNavigation(Offset, NavLoc)
 					)
 					{
-						if (CommonExtensions::OverlapCheckPosition(Mechanism, Cursor.GetSubject(), CAPSULE_OFFSET(Loc),
+						if (CommonExtensions::OverlapCheckPosition(Mechanism, SubjectHandle, CAPSULE_OFFSET(Loc),
 						                                           CAPSULE_OFFSET(NavLoc),
 						                                           Stop, OutHit,
 						                                           OutHitNormal, TraceTypeQuery1, OwnerInstanceID))
