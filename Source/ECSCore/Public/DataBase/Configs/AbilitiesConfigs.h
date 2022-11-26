@@ -42,7 +42,7 @@ struct FAbilitiesConfigsList
 };
 
 UCLASS(Blueprintable)
-class ECSCORE_API UAbilitiesConfigs : public UObject
+class ECSCORE_API UAbilitiesConfigs : public UDataAsset
 {
 	GENERATED_BODY()
 

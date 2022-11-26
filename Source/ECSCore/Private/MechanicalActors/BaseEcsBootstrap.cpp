@@ -1,5 +1,7 @@
 ﻿#include "MechanicalActors/BaseEcsBootstrap.h"
 
+#include "UId/UidSubjectManager.h"
+
 void ABaseEcsBootstrap::BeginPlay()
 {
 	Super::BeginPlay();
@@ -44,6 +46,7 @@ void ABaseEcsBootstrap::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		Feature->Teardown(GetMechanism());
 	}
+	UidSubjectManager::Dispose();
 }
 
 auto ABaseEcsBootstrap::Add(TSharedPtr<Feature> InFeature) -> ABaseEcsBootstrap*

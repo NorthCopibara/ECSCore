@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "DataBase/DataBase.h"
-
 #include "DataBaseComponent.generated.h"
 
 USTRUCT(BlueprintType)

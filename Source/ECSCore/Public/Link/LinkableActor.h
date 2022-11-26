@@ -23,7 +23,7 @@ public:
 	virtual void EnableLink();
 	virtual void DisableLink();
 	
-	UFUNCTION(BlueprintNativeEvent)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void OnDeath();
 
 	UFUNCTION(BlueprintNativeEvent)

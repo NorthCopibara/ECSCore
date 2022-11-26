@@ -6,8 +6,8 @@ UENUM(BlueprintType)
 enum class ETeamType : uint8
 {
 	None,
-	Player,
+	Friend,
 	Aggressive,
-	World,
-	ExplosionWave
+	Neutral,
+	World
 };

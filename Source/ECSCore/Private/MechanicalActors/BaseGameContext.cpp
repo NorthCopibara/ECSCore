@@ -12,5 +12,5 @@ void ABaseGameContext::Initialize()
 
 void ABaseGameContext::InjectDataToECS() const
 {
-	GetMechanism()->SpawnSubject().SetTrait(FDataBaseComponent(DataBase.GetDefaultObject()));
+	GetMechanism()->SpawnSubject().SetTrait(FDataBaseComponent(DataBase));
 }

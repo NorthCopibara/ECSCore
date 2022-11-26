@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,7 +5,6 @@
 #include "Mechanism.h"
 #include "DataBase/DataBase.h"
 #include "MechanicalActors/BaseEcsBootstrap.h"
-
 #include "BaseGameContext.generated.h"
 
 UCLASS()
@@ -20,7 +17,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	TSubclassOf<UDataBase> DataBase;
+	UDataBase* DataBase;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	TSubclassOf<ABaseEcsBootstrap> EcsMainBootstrap;

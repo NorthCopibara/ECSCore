@@ -17,6 +17,7 @@
 #include "Components/Movement/PositionComponent.h"
 #include "Components/Movement/RotationComponent.h"
 #include "DataBase/DataBase.h"
+#include "DataBase/Configs/AbilitiesConfigs.h"
 #include "ECSCore/Public/Utils.h"
 #include "Link/LinkableActor.h"
 #include "Link/View/BaseCharacterView.h"
@@ -95,6 +96,12 @@ public:
 		Mechanism->SpawnSubjectDeferred<FEventRemoveComponent>(FEventRemoveComponent(Trait, EntityNonSolid));
 	}
 
+	static void TryToRemoveTrait(const FSubjectHandle& Subject, UScriptStruct* const Trait)
+	{
+		if (Subject.HasTrait(Trait))
+			Subject.RemoveTrait(Trait);
+	}
+
 	template <typename T>
 	static T* Ctx(AMechanism* Mechanism)
 	{
@@ -165,7 +172,7 @@ public:
 		});
 		return SubPtr;
 	}
-	
+
 	static UDataBase* GetDataBase(AMechanism* Mechanism)
 	{
 		if (!Mechanism) return nullptr;
@@ -181,6 +188,16 @@ public:
 		return DataBase;
 	}
 
+	template <typename T>
+	static T* GetDataBaseByType(AMechanism* Mechanism)
+	{
+		const auto DB = GetDataBase(Mechanism);
+		if(!DB) return nullptr;
+
+		const auto TargetDB = DB->GetBase<T>();
+		return TargetDB;
+	}
+	
 	static UDataBase* GetDataBaseSolid(AMechanism* Mechanism)
 	{
 		const auto DataBaseFilter = FFilter::Make<FDataBaseComponent>();
@@ -200,11 +217,11 @@ public:
 	                                                UScriptStruct* TraitBase,
 	                                                int32 ConfigId = 0)
 	{
-		const auto Configs = GetDataBase(Mechanism)->AbilitySystemApplier.GetDefaultObject()->GetConfigById(ConfigId);
+		const auto Configs = GetDataBaseByType<UAbilitiesConfigs>(Mechanism)->GetConfigById(ConfigId);
 
 		EActivateAbilityStatus Result = EActivateAbilityStatus::Success;
 		if (CheckAndRemoveAbilities(Mechanism, Subject, TraitBase, Configs, Result)) return Result;
-		ObtainTraitAndFire(Mechanism, Subject, TraitBase);
+		Subject.ObtainTrait(TraitBase);
 		return Result;
 	}
 
@@ -240,9 +257,7 @@ public:
 		{
 			if (Subject.HasTrait(TraitToDelete))
 			{
-				CancelAbility(Mechanism,
-				              Subject,
-				              TraitToDelete);
+				CancelAbility(Mechanism, Subject, TraitToDelete);
 			}
 		}
 
@@ -404,36 +419,9 @@ public:
 					AdditionalOperations(LinkActor, SubjectHandle);
 				}
 			}
+			
 		}
 	}
-
-	static void LinkCharactersFromScene(AMechanism* Mechanism, const FReturnSubject ReturnSubject)
-	{
-		LinkActorsFromScene<ABaseCharacterView>(Mechanism, ReturnSubject, [&](ILinkableActor* Link, const FSubjectHandle SubjectHandle)
-			{
-				const ABaseCharacterView* Char = Cast<ABaseCharacterView>(Link);
-				if (!Char) return;
-
-				//TODO: {REF} init character
-				//const auto CharacterType = Char->CharacterData.CharacterType;
-				//const auto AssetName = ENUM_VALUE_TO_STRING(ECharacterType, CharacterType);
-				//SubjectHandle.SetTrait(FAssetNameComponent(FName(*AssetName)));
-				//GameplayExtensions::InitializeCharacter(Mechanism, SubjectHandle, CharacterType);				
-			});
-	}
-
-	//TODO: {REF} init character
-/*
-	static FSubjectHandle SpawnCharacterOnScene(AMechanism* Mechanism, ECharacterType CharacterType, const FTransform Transform = FTransform::Identity,
-		 const ETeamType TeamType = ETeamType::None)
-	{
-		const auto AssetName = ENUM_VALUE_TO_STRING(ECharacterType, CharacterType);
-		const auto CharacterSubject =  TeamType == ETeamType::None
-		? GameExtensions::CreatePawn(Mechanism, Transform, FName(*AssetName))
-		: GameExtensions::CreateAIPawn(Mechanism, Transform, FName(*AssetName), TeamType);
-		GameplayExtensions::InitializeCharacter(Mechanism, CharacterSubject, CharacterType);
-		return CharacterSubject;
-	}*/
 
 private:
 	template <typename T, typename U>

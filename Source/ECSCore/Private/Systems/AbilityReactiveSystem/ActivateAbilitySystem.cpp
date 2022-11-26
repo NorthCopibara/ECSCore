@@ -12,7 +12,6 @@
 
 DEFINE_LOG_CATEGORY_STATIC(LogAbilitySystem, All, All);
 
-
 void ActivateAbilitySystem::Initialize(AMechanism* Mechanism)
 {
 	SetupTrigger(FActivateAbilityComponent::StaticStruct());
@@ -33,14 +32,16 @@ void ActivateAbilitySystem::Execute(AMechanism* Mechanism, FUnsafeSubjectHandle 
 {
 	if (AbilitySub.HasTrait<FCancelAbilityComponent>())
 	{
-		AbilitySub.RemoveTrait<FCancelAbilityComponent>();
+		AbilitySub.RemoveTrait<FActivateAbilityComponent>();
 		AbilitySub.SetTrait(FAbilityCounterComponent(0));
+		return;
 	}
 
 	if (AbilitySub.HasTrait<FEndAbilityComponent>())
 	{
-		AbilitySub.RemoveTrait<FEndAbilityComponent>();
+		AbilitySub.RemoveTrait<FActivateAbilityComponent>();
 		AbilitySub.SetTrait(FAbilityCounterComponent(0));
+		return;
 	}
 
 	if (!AbilityType || !AbilitySub.HasTrait(AbilityType))

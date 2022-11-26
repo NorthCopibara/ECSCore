@@ -1,25 +1,18 @@
 ﻿#pragma once
-#include "Assets/AssetsBase.h"
-#include "Configs/AbilitiesConfigs.h"
-#include "Configs/TeamsConfig.h"
-
 #include "DataBase.generated.h"
 
 UCLASS(Blueprintable)
-class ECSCORE_API UDataBase : public UObject
+class ECSCORE_API UDataBase : public UDataAsset
 {
 	GENERATED_BODY()
 public:
+	template <typename T>
+	T* GetBase()
+	{        
+		return Cast<T>(DataAssets[T::StaticClass()->GetName()]);
+	}
+
+protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
-	TSubclassOf<UAssetsBase> AssetBase;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Configs")
-	TSubclassOf<UAbilitiesConfigs> AbilitySystemApplier;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Configs")
-	TSubclassOf<UTeamsConfig> TeamsConfigs;
-
-	//???
-	template<typename T>
-	T GetBase() { return AssetBase.GetDefaultObject(); }
+	TMap<FString, UDataAsset*> DataAssets;
 };

@@ -26,7 +26,7 @@ struct FTeamTable
 };
 
 UCLASS(Blueprintable)
-class ECSCORE_API UTeamsConfig : public UObject
+class ECSCORE_API UTeamsConfig : public UDataAsset
 {
 	GENERATED_BODY()
 

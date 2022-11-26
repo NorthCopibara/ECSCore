@@ -1,4 +1,4 @@
-﻿#include "Link/ISavableActor.h"
+﻿#include "Link/SavableActor.h"
 
 void ISavableActor::SaveOnSubject(FSubjectHandle Subject)
 {

@@ -35,8 +35,9 @@ void EndAbilitySystem::Execute(AMechanism* Mechanism, FUnsafeSubjectHandle Abili
 
 	if (AbilitySub.HasTrait<FCancelAbilityComponent>())
 	{
-		AbilitySub.RemoveTrait<FCancelAbilityComponent>();
+		AbilitySub.RemoveTrait<FEndAbilityComponent>();
 		AbilitySub.SetTrait(FAbilityCounterComponent(0));
+		return;
 	}
 
 	if (!AbilityType || !AbilitySub.HasTrait(AbilityType))

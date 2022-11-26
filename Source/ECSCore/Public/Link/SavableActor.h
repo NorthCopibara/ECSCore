@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "SubjectHandle.h"
-#include "ISavableActor.generated.h"
+#include "SavableActor.generated.h"
 
 UINTERFACE(MinimalAPI)
 class USavableActor : public UInterface

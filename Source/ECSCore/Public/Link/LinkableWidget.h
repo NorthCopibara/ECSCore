@@ -1,19 +1,17 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 #include "SubjectHandle.h"
 #include "UObject/Interface.h"
-#include "ILinkableWidget.generated.h"
+#include "LinkableWidget.generated.h"
 
 UINTERFACE()
-class UILinkableWidget : public UInterface
+class ULinkableWidget : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class ECSCORE_API IILinkableWidget
+class ECSCORE_API ILinkableWidget
 {
 	GENERATED_BODY()
 
