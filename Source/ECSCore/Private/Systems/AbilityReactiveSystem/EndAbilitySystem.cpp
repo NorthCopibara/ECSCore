@@ -1,7 +1,7 @@
 ﻿#include "Systems/AbilityReactiveSystem/EndAbilitySystem.h"
 
-#include "Components/OwnerUidComponent.h"
-#include "Components/UidComponent.h"
+#include "Components/OwnerUIdComponent.h"
+#include "Components/UIdComponent.h"
 #include "Components/Abilities/AbilityCountComponent.h"
 #include "Components/Abilities/AbilityCounterComponent.h"
 #include "Components/Abilities/ActivateAbilityComponent.h"
@@ -58,12 +58,12 @@ void EndAbilitySystem::Execute(AMechanism* Mechanism, FUnsafeSubjectHandle Abili
 		return;
 	}
 
-	if (!AbilitySub.HasTrait<FOwnerUidComponent>()) return;
-	const auto AbilityOwnerUid = AbilitySub.GetTrait<FOwnerUidComponent>();
+	if (!AbilitySub.HasTrait<FOwnerUIdComponent>()) return;
+	const auto AbilityOwnerUid = AbilitySub.GetTrait<FOwnerUIdComponent>();
 
-	const auto OwnerFilter = FFilter::Make<FAbilityUserComponent, FUidComponent>();
+	const auto OwnerFilter = FFilter::Make<FAbilityUserComponent, FUIdComponent>();
 	const auto Enchain = Mechanism->Enchain<FUnsafeChain>(OwnerFilter);
-	Enchain->Operate([&](const FUnsafeSubjectHandle OwnerSub, const FUidComponent OwnerUid)
+	Enchain->Operate([&](const FUnsafeSubjectHandle OwnerSub, const FUIdComponent OwnerUid)
 	{
 		if (OwnerUid.Value != AbilityOwnerUid.Value) return;
 

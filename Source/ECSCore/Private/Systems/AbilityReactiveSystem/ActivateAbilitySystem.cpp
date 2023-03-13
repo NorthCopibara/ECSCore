@@ -1,14 +1,14 @@
 ﻿#include "Systems/AbilityReactiveSystem/ActivateAbilitySystem.h"
 
-#include "Components/OwnerUidComponent.h"
-#include "Components/UidComponent.h"
+#include "Components/OwnerUIdComponent.h"
+#include "Components/UIdComponent.h"
 #include "Components/Abilities/AbilityCountComponent.h"
 #include "Components/Abilities/AbilityCounterComponent.h"
 #include "Components/Abilities/ActivateAbilityComponent.h"
 #include "Components/Abilities/CancelAbilityComponent.h"
 #include "Components/Abilities/EndAbilityComponent.h"
 #include "Components/Flags/AbilityUserComponent.h"
-#include "Extensions/EcsExtenstions.h"
+#include "Extensions/EcsExtensions.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogAbilitySystem, All, All);
 
@@ -61,12 +61,12 @@ void ActivateAbilitySystem::Execute(AMechanism* Mechanism, FUnsafeSubjectHandle 
 		return;
 	}
 
-	if (!AbilitySub.HasTrait<FOwnerUidComponent>()) return;
-	const auto AbilityOwnerUid = AbilitySub.GetTrait<FOwnerUidComponent>();
+	if (!AbilitySub.HasTrait<FOwnerUIdComponent>()) return;
+	const auto AbilityOwnerUid = AbilitySub.GetTrait<FOwnerUIdComponent>();
 
-	const auto OwnerFilter = FFilter::Make<FAbilityUserComponent, FUidComponent>();
+	const auto OwnerFilter = FFilter::Make<FAbilityUserComponent, FUIdComponent>();
 	const auto Enchain = Mechanism->Enchain<FUnsafeChain>(OwnerFilter);
-	Enchain->Operate([&](const FUnsafeSubjectHandle OwnerSub, const FUidComponent OwnerUid)
+	Enchain->Operate([&](const FUnsafeSubjectHandle OwnerSub, const FUIdComponent OwnerUid)
 	{
 		if (OwnerUid.Value != AbilityOwnerUid.Value) return;
 		if (OwnerHasComponents(OwnerSub) && CanActivate(Mechanism, OwnerSub))

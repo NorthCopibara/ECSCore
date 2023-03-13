@@ -1,17 +1,15 @@
 ﻿#pragma once
-#include "Link/LinkableActor.h"
-
+#include "Link/LinkableObject.h"
 #include "LinkComponent.generated.h"
 
 USTRUCT(BlueprintType)
 struct FLinkComponent
 {
-	GENERATED_BODY()	
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)	
-	TScriptInterface<ILinkableActor> Value;
+	GENERATED_BODY()
+	
 	FLinkComponent(): Value(nullptr){}
-	explicit FLinkComponent(const TScriptInterface<ILinkableActor> Value)
-	{
-		this->Value = Value;
-	}	
+	explicit FLinkComponent(const TScriptInterface<ILinkableObject> Value) : Value(Value) {}	
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)	
+	TScriptInterface<ILinkableObject> Value;
 };

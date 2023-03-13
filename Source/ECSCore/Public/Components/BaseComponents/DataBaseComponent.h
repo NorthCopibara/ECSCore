@@ -5,12 +5,10 @@
 USTRUCT(BlueprintType)
 struct FDataBaseComponent
 {
-	GENERATED_BODY()	
+	GENERATED_BODY()
+	FDataBaseComponent() {}
+	explicit FDataBaseComponent(UDataBase* Value) : Value(Value) {}
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)	
-	UDataBase* Value;
-	FDataBaseComponent(): Value(nullptr){}
-	explicit FDataBaseComponent(UDataBase* Value)
-	{
-		this->Value = Value;
-	}	
+	UDataBase* Value = nullptr;
 };

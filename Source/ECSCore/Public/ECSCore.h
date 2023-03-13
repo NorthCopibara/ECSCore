@@ -1,8 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
-
 #pragma once
-
-#include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
 class ECSCORE_API FECSCoreModule : public IModuleInterface

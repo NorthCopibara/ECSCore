@@ -1,5 +1,4 @@
 ﻿#include "Systems/ReactiveSystems/ReactiveAddSystem.h"
-
 #include "Components/EventAddComponent.h"
 
 ReactiveAddSystem::ReactiveAddSystem()

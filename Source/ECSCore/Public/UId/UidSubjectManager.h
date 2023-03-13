@@ -1,7 +1,8 @@
 ﻿#pragma once
+#include "SubjectHandle.h"
 #include "UId.h"
 
-class ECSCORE_API UidSubjectManager
+class ECSCORE_API UIdSubjectManager
 {
 	inline static TMap<FUId, FSubjectHandle> _ids {};
 

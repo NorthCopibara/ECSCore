@@ -1,13 +1,7 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
-
-#pragma once
-
-#include "CoreMinimal.h"
+﻿#pragma once
 #include "AbilitiesConfigs.generated.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogAbilitiesConfigs, All, All);
-
-struct FSubjectHandle;
 
 UENUM()
 enum class EActivateAbilityStatus : uint8

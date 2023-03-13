@@ -1,14 +1,11 @@
 ﻿#pragma once
-#include "UId/UId.h"
-
-#include "OwnerUidComponent.generated.h"
+#include "UIdComponent.h"
+#include "OwnerUIdComponent.generated.h"
 
 USTRUCT(BlueprintType)
-struct FOwnerUidComponent
+struct FOwnerUIdComponent : public FUIdComponent
 {
 	GENERATED_BODY()
-	FOwnerUidComponent() : Value(FUId()){}
-	explicit FOwnerUidComponent(const FUId Value) : Value(Value){}
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	FUId Value;
+	FOwnerUIdComponent() {}
+	explicit FOwnerUIdComponent(const FUId Value) : FUIdComponent(Value) {}
 };

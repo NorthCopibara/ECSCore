@@ -1,8 +1,5 @@
 #pragma once
 
-#include "CoreMinimal.h"
-#include "MechanicalActor.h"
-#include "Mechanism.h"
 #include "DataBase/DataBase.h"
 #include "MechanicalActors/BaseEcsBootstrap.h"
 #include "BaseGameContext.generated.h"
@@ -11,7 +8,7 @@ UCLASS()
 class ECSCORE_API ABaseGameContext : public AMechanicalActor
 {
 	GENERATED_BODY()
-public:
+public:	
 	UFUNCTION(BlueprintCallable)
 	virtual void Initialize();
 
